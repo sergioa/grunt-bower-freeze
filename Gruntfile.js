@@ -31,16 +31,9 @@ module.exports = function (grunt) {
         copy: {
             test: {
                 files: [
-                    {src: ['test/fixtures/default-bower.json'], dest: 'tmp/default/bower.json'}
+                    {src: ['test/fixtures/default-bower.json'], dest: 'tmp/default/bower.json'},
+                    {src: ['test/fixtures/missing-resolutions-bower.json'], dest: 'tmp/missing-resolutions/bower.json'}
                 ]
-            }
-        },
-
-        "bower-install-simple": {
-            default_options: {
-                options: {
-                    cwd: 'tmp/default/'
-                }
             }
         },
 
@@ -48,7 +41,16 @@ module.exports = function (grunt) {
         bowerfreeze: {
             default_options: {
                 options: {
-                    cwd: 'tmp/default/'
+                    cwd: 'tmp/default/',
+                    install: true
+                },
+                src: 'bower.json',
+                dest: 'bower-frozen.json'
+            },
+            missing_resolutions: {
+                options: {
+                    cwd: 'tmp/missing-resolutions/',
+                    install: true
                 },
                 src: 'bower.json',
                 dest: 'bower-frozen.json'
@@ -74,7 +76,7 @@ module.exports = function (grunt) {
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['clean', 'copy:test', 'bower-install-simple', 'bowerfreeze', 'nodeunit']);
+    grunt.registerTask('test', ['clean', 'copy:test', 'bowerfreeze', 'nodeunit']);
 
     // By default, lint and run all tests.
     grunt.registerTask('default', ['jshint', 'test']);

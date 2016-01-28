@@ -36,4 +36,13 @@ exports.bowerfreeze = {
 
         test.done();
     },
+    missing_resolutions: function (test) {
+        test.expect(1);
+
+        var actual = grunt.file.read('tmp/missing-resolutions/bower-frozen.json');
+        var expected = grunt.file.read('test/expected/missing-resolutions-frozen.json');
+        test.equal(actual, expected, 'should contain the same');
+
+        test.done();
+    },
 };

@@ -32,13 +32,13 @@ module.exports = function (grunt) {
                         grunt.fail.fatal('Please run bower install first');
                     }
 
-                    if (bower.dependencies[key]) {
+                    if (bower.dependencies && bower.dependencies[key]) {
                         bower.dependencies[key] = value.pkgMeta._release;
                     }
-                    if (bower.devDependencies[key]) {
+                    if (bower.devDependencies && bower.devDependencies[key]) {
                         bower.devDependencies[key] = value.pkgMeta._release;
                     }
-                    if (bower.resolutions[key]) {
+                    if (bower.resolutions && bower.resolutions[key]) {
                         bower.resolutions[key] = value.pkgMeta._release;
                     }
                 });
@@ -53,26 +53,40 @@ module.exports = function (grunt) {
         var done = this.async();
 
         var updateBower = false;
+        var installBower = false;
         var cwd = './';
         if (this.data.options) {
             updateBower = this.data.options.update || updateBower;
+            installBower = this.data.options.install || installBower;
             cwd = this.data.options.cwd || cwd;
         }
         var src = cwd + this.data.src;
         var dest = cwd + this.data.dest;
 
         if (updateBower) {
-            grunt.log.write('Updating bower ... ');
+            grunt.log.write('Updating bower dependencies ... ');
             grunt.util.spawn({
                 cmd: 'bower',
                 args: ['update'],
                 opts: {
                     'cwd': cwd
                 }
-            }, function() {
+            }, function () {
                 grunt.log.writeln('DONE');
                 freeze(cwd, src, dest, done);
             })
+        } else if (installBower) {
+                grunt.log.write('Installing bower dependencies ... ');
+                grunt.util.spawn({
+                    cmd: 'bower',
+                    args: ['install'],
+                    opts: {
+                        'cwd': cwd
+                    }
+                }, function() {
+                    grunt.log.writeln('DONE');
+                    freeze(cwd, src, dest, done);
+                })
         } else {
             freeze(cwd, src, dest, done);
         }
