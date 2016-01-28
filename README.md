@@ -1,4 +1,4 @@
-# grunt-bower-lock
+# grunt-bower-freeze
 
 > Lock the bower.json to exact versions
 
@@ -8,23 +8,23 @@ This plugin requires Grunt `~0.4.5`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-bower-lock --save-dev
+npm install grunt-bower-freeze --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-bower-lock');
+grunt.loadNpmTasks('grunt-bower-freeze');
 ```
 
-## The "bower_lock" task
+## The "bowerfreeze" task
 
 ### Overview
-In your project's Gruntfile, add a section named `bower_lock` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `bowerfreeze` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  bower_lock: {
+  bowerfreeze: {
     options: {
       // Task-specific options go here.
     },
@@ -37,48 +37,43 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.cwd
 Type: `String`
-Default value: `',  '`
+Default value: `'./'`
 
-A string value that is used to do something with whatever.
-
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
+If set all `src` and `dest` paths will be set relative to `cwd`.
 
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+In this example, the default options are used to freeze the versions of the bower.json in the current working directory.
 
 ```js
 grunt.initConfig({
-  bower_lock: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+    bowerfreeze: {
+        freeze: {
+            src: 'bower.json',
+            dest: 'bower-frozen.json'
+        }
+    }
 });
+
 ```
 
 #### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+In this example, the default options are used to freeze the versions of the bower.json in the specified `cwd`.
 
 ```js
 grunt.initConfig({
-  bower_lock: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+    bowerfreeze: {
+        freeze: {
+            options: {
+                cwd: 'tmp/default/'
+            },
+            src: 'bower.json',
+            dest: 'bower-frozen.json'
+        },
+    }
 });
 ```
 

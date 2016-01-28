@@ -1,73 +1,82 @@
 /*
- * grunt-bower-lock
+ * grunt-bower-freeze
  * 
  *
- * Copyright (c) 2016 Christoph Krautz
+ * Copyright (c) 2016 Comerge AG
  * Licensed under the MIT license.
  */
 
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
-  // Project configuration.
-  grunt.initConfig({
-    jshint: {
-      all: [
-        'Gruntfile.js',
-        'tasks/*.js',
-        '<%= nodeunit.tests %>'
-      ],
-      options: {
-        jshintrc: '.jshintrc'
-      }
-    },
-
-    // Before generating any new files, remove any previously-created files.
-    clean: {
-      tests: ['tmp']
-    },
-
-    // Configuration to be run (and then tested).
-    bower_lock: {
-      default_options: {
-        options: {
+    // Project configuration.
+    grunt.initConfig({
+        jshint: {
+            all: [
+                'Gruntfile.js',
+                'tasks/*.js',
+                '<%= nodeunit.tests %>'
+            ],
+            options: {
+                jshintrc: '.jshintrc'
+            }
         },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
-        }
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!'
+
+        // Before generating any new files, remove any previously-created files.
+        clean: {
+            tests: ['tmp']
         },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
+
+        copy: {
+            test: {
+                files: [
+                    {src: ['test/fixtures/default-bower.json'], dest: 'tmp/default/bower.json'}
+                ]
+            }
+        },
+
+        "bower-install-simple": {
+            default_options: {
+                options: {
+                    cwd: 'tmp/default/'
+                }
+            }
+        },
+
+        // Configuration to be run (and then tested).
+        bowerfreeze: {
+            default_options: {
+                options: {
+                    cwd: 'tmp/default/'
+                },
+                src: 'bower.json',
+                dest: 'bower-frozen.json'
+            }
+        },
+
+        // Unit tests.
+        nodeunit: {
+            tests: ['test/*_test.js']
         }
-      }
-    },
 
-    // Unit tests.
-    nodeunit: {
-      tests: ['test/*_test.js']
-    }
+    });
 
-  });
+    // Actually load this plugin's task(s).
+    grunt.loadTasks('tasks');
 
-  // Actually load this plugin's task(s).
-  grunt.loadTasks('tasks');
+    // These plugins provide necessary tasks.
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-nodeunit');
+    grunt.loadNpmTasks('grunt-bower-install-simple');
 
-  // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+    // Whenever the "test" task is run, first clean the "tmp" dir, then run this
+    // plugin's task(s), then test the result.
+    grunt.registerTask('test', ['clean', 'copy:test', 'bower-install-simple', 'bowerfreeze', 'nodeunit']);
 
-  // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-  // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'bower_lock', 'nodeunit']);
-
-  // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
+    // By default, lint and run all tests.
+    grunt.registerTask('default', ['jshint', 'test']);
 
 };
