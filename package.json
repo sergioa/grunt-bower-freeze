@@ -1,7 +1,7 @@
 {
   "name": "grunt-bower-freeze",
   "description": "Freeze the versions in bower.json",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "homepage": "",
   "author": {
     "name": "Christoph Krautz",
