@@ -31,7 +31,6 @@ grunt.initConfig({
         }
     }
 });
-});
 ```
 
 ### Options
