@@ -43,7 +43,6 @@ module.exports = function (grunt) {
                     }
                 });
                 var frozen = JSON.stringify(bower, null, '  ');
-                console.log(frozen);
                 grunt.file.write(dest, frozen);
             }
             done();
