@@ -2,7 +2,7 @@
 
 > Lock the bower.json to exact versions
 
-[![Build Status](https://travis-ci.org/comerge/grunt-bower-freeze.svg?branch=ck%2Ftravis)](https://travis-ci.org/comerge/grunt-bower-freeze)
+[![Build Status](https://travis-ci.org/comerge/grunt-bower-freeze.svg?branch=master)](https://travis-ci.org/comerge/grunt-bower-freeze)
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
