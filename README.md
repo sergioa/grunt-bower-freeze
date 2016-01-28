@@ -24,14 +24,13 @@ In your project's Gruntfile, add a section named `bowerfreeze` to the data objec
 
 ```js
 grunt.initConfig({
-  bowerfreeze: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
+    bowerfreeze: {
+        freeze: {
+            src: 'bower.json',
+            dest: 'bower-frozen.json'
+        }
+    }
+});
 });
 ```
 
@@ -81,4 +80,4 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+See the [CHANGELOG](CHANGELOG).
