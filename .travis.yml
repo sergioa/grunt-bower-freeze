@@ -3,5 +3,5 @@ node_js:
   - "4.2"
 before_script:
   - npm install -g grunt-cli
-  - nom install -g bower
+  - npm install -g bower
 script: grunt test
