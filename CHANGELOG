@@ -1,3 +1,8 @@
+v0.3.0:
+ date: 2015-01-28
+ changes:
+   - Add option to install bower dependencies before freezing
+   - Do not crash when an optional section of bower.json is missing.
 v0.2.0:
  date: 2015-01-28
  changes:

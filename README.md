@@ -41,11 +41,17 @@ Default value: `'./'`
 
 If set all `src` and `dest` paths will be set relative to `cwd`.
 
+#### options.install
+Type: `boolean`
+Default value: `false`
+
+Install bower before freezing (only if `options.update = false`).
+
 #### options.update
 Type: `boolean`
 Default value: `false`
 
-Update bower before freezing.
+Update bower before freezing. Overrides `options.install`.
 
 ### Usage Examples
 
