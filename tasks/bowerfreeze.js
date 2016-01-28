@@ -13,16 +13,7 @@ module.exports = function (grunt) {
     // Lodash
     var _ = require('lodash');
 
-    grunt.registerMultiTask('bowerfreeze', 'Freeze the bower.json to exact versions', function () {
-        var done = this.async();
-
-        var cwd = './';
-        if (this.data.options && this.data.options.cwd) {
-            cwd = this.data.options.cwd;
-        }
-        var src = cwd + this.data.src;
-        var dest = cwd + this.data.dest;
-
+    function freeze(cwd, src, dest, done) {
         grunt.util.spawn({
             cmd: 'bower',
             args: ['list', '--json', '--offline'],
@@ -57,6 +48,35 @@ module.exports = function (grunt) {
             }
             done();
         });
+    }
+
+    grunt.registerMultiTask('bowerfreeze', 'Freeze the bower.json to exact versions', function () {
+        var done = this.async();
+
+        var updateBower = false;
+        var cwd = './';
+        if (this.data.options) {
+            updateBower = this.data.options.update || updateBower;
+            cwd = this.data.options.cwd || cwd;
+        }
+        var src = cwd + this.data.src;
+        var dest = cwd + this.data.dest;
+
+        if (updateBower) {
+            grunt.log.write('Updating bower ... ');
+            grunt.util.spawn({
+                cmd: 'bower',
+                args: ['update'],
+                opts: {
+                    'cwd': cwd
+                }
+            }, function() {
+                grunt.log.writeln('DONE');
+                freeze(cwd, src, dest, done);
+            })
+        } else {
+            freeze(cwd, src, dest, done);
+        }
     });
 
 };

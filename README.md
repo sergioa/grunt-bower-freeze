@@ -41,6 +41,12 @@ Default value: `'./'`
 
 If set all `src` and `dest` paths will be set relative to `cwd`.
 
+#### options.update
+Type: `boolean`
+Default value: `false`
+
+Update bower before freezing.
+
 ### Usage Examples
 
 #### Default Options
@@ -60,13 +66,15 @@ grunt.initConfig({
 
 #### Custom Options
 In this example, the default options are used to freeze the versions of the bower.json in the specified `cwd`.
+Additionally, all bower dependencies are updated before freezing.
 
 ```js
 grunt.initConfig({
     bowerfreeze: {
         freeze: {
             options: {
-                cwd: 'tmp/default/'
+                cwd: 'tmp/default/',
+                update: true
             },
             src: 'bower.json',
             dest: 'bower-frozen.json'
