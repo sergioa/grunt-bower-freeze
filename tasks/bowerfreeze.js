@@ -33,7 +33,7 @@ module.exports = function (grunt) {
                     }
 
                     if (bower.dependencies && bower.dependencies[key]) {
-                        bower.dependencies[key] = value.pkgMeta._release;
+                        bower.dependencies[key] = value.pkgMeta._source + '#' + value.pkgMeta._release;
                     }
                     if (bower.devDependencies && bower.devDependencies[key]) {
                         bower.devDependencies[key] = value.pkgMeta._release;
